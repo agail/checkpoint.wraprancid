@@ -22,3 +22,10 @@ and Wraprancid (https://sites.google.com/site/jrbinks/code/rancid/wraprancid)
 Login setup is expected in .cloginrc (shared with clogin)
 
 -- Václav Ovsík <vaclav.ovsik@i.cz>  Thu, 13 Feb 2014 10:32:51 +0100
+
+##
+
+* Read ckplogin.path for changes
+
+-- agail <github.com/agail> Wed, 2 Mar 2022
+

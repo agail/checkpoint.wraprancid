@@ -1,0 +1,47 @@
+--- ckplogin	2022-03-02 16:25:42.785253959 +0100
++++ ckplogin-ng	2022-03-02 16:25:13.049079627 +0100
+@@ -47,6 +47,13 @@
+ #   * partialy purged unused parts
+ #
+ #  -- Václav Ovsík <vaclav.ovsik@i.cz>  Wed, 12 Feb 2014 13:50:54 +0100
++
++#
++#    * modified for Check Point Gaia SMB (disabled 'set clienv rows 0')
++#    * disabled telnet (no need for .cloginrc)
++#    * disabled ssh 3des chypher
++#
++#  -- agail <github.com/agail> Wed, 2 Mar 2022
+ #
+ 
+ # Usage line
+@@ -309,7 +316,8 @@
+ 	    if {"$identfile" != ""} {
+ 		set cmd "$cmd -i $identfile"
+ 	    }
+-	    set retval [catch {eval spawn [split "$cmd -c $cyphertype -x -l $user $router" { }]} reason]
++	    #set retval [catch {eval spawn [split "$cmd -c $cyphertype -x -l $user $router" { }]} reason]
++	    set retval [catch {eval spawn [split "$cmd -x -l $user $router" { }]} reason]
+ 	    if { $retval } {
+ 		send_user "\nError: $cmd failed: $reason\n"
+ 		return 1
+@@ -663,7 +671,8 @@
+ 
+     # Figure out connection method
+     set cmethod [find method $router]
+-    if { "$cmethod" == "" } { set cmethod {{telnet} {ssh}} }
++    #if { "$cmethod" == "" } { set cmethod {{telnet} {ssh}} }
++    if { "$cmethod" == "" } { set cmethod {ssh} }
+ 
+     # Figure out the SSH executable name
+     set sshcmd [join [lindex [find sshcmd $router] 0] ""]
+@@ -685,8 +694,8 @@
+ 				}
+     }
+     if { $do_command || $do_script } {
+-	send "set clienv rows 0\r"
+-	expect -re $prompt		{}
++	#send "set clienv rows 0\r"
++	#expect -re $prompt		{}
+     }
+     if { $do_command } {
+ 	if {[run_commands $prompt $command]} {
